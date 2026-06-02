@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Píldora Roja | Career & Power Coaching</title>
+  <style>
+    :root {
+      --bg: #050608;
+      --bg-2: #0b0e14;
+      --card: rgba(255,255,255,0.055);
+      --card-2: rgba(255,255,255,0.08);
+      --text: #f3f5f7;
+      --muted: #a9b0bb;
+      --blue: #0d8cff;
+      --red: #ff2437;
+      --line: rgba(255,255,255,0.13);
+      --success: #e8edf5;
+      --radius: 22px;
+      --shadow: 0 30px 90px rgba(0,0,0,.55);
+      --max: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(13,140,255,.24), transparent 28%),
+        radial-gradient(circle at 82% 24%, rgba(255,36,55,.23), transparent 30%),
+        linear-gradient(180deg, #020305 0%, #080a0f 45%, #030406 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.032) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.75), transparent 70%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 110%, rgba(255,255,255,.08), transparent 34%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(5,6,8,.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue) 0 48%, #111 48% 52%, var(--red) 52% 100%);
+      box-shadow: 0 0 28px rgba(255,36,55,.4), 0 0 28px rgba(13,140,255,.28);
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .navlinks a:hover { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 14px 22px;
+      color: white;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      background: linear-gradient(135deg, var(--red), #b50c1a);
+      box-shadow: 0 18px 40px rgba(255,36,55,.25);
+      transition: transform .18s ease, box-shadow .18s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 52px rgba(255,36,55,.34);
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--line);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .hero {
+      padding: 86px 0 48px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.06fr .94fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      background: rgba(255,255,255,.045);
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 22px rgba(255,36,55,.8);
+    }
+
+    h1 {
+      font-size: clamp(46px, 7vw, 88px);
+      line-height: .93;
+      letter-spacing: -.07em;
+      margin: 0 0 24px;
+      max-width: 850px;
+    }
+
+    .headline-muted { color: #d9dde4; }
+    .headline-red { color: var(--red); text-shadow: 0 0 32px rgba(255,36,55,.2); }
+
+    .lead {
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.42;
+      color: #d7dce4;
+      max-width: 720px;
+      margin: 0 0 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .microcopy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 580px;
+    }
+
+    .visual-card {
+      position: relative;
+      min-height: 560px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(13,140,255,.22), transparent 30%),
+        radial-gradient(circle at 70% 70%, rgba(255,36,55,.24), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      padding: 28px;
+    }
+
+    .visual-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0 48%, rgba(255,255,255,.05) 48% 49%, transparent 49% 100%);
+      opacity: .75;
+    }
+
+    .pill-stage {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .pill-pair {
+      position: relative;
+      width: 340px;
+      height: 220px;
+      transform: rotate(-7deg);
+      filter: drop-shadow(0 20px 45px rgba(0,0,0,.55));
+    }
+
+    .pill {
+      position: absolute;
+      width: 230px;
+      height: 72px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: inset 0 0 16px rgba(255,255,255,.25), 0 0 50px rgba(255,255,255,.1);
+    }
+
+    .pill.blue {
+      left: 0;
+      top: 32px;
+      transform: rotate(-30deg);
+      background: linear-gradient(90deg, rgba(13,140,255,.18), rgba(13,140,255,.88), rgba(255,255,255,.16));
+      box-shadow: inset 0 0 22px rgba(255,255,255,.28), 0 0 55px rgba(13,140,255,.55);
+    }
+
+    .pill.red {
+      right: 0;
+      bottom: 28px;
+      transform: rotate(-30deg);
+      background: linear-gradient(90deg, rgba(255,36,55,.18), rgba(255,36,55,.88), rgba(255,255,255,.16));
+      box-shadow: inset 0 0 22px rgba(255,255,255,.28), 0 0 55px rgba(255,36,55,.48);
+    }
+
+    .visual-copy {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 500px;
+    }
+
+    .visual-title {
+      font-size: 15px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-weight: 800;
+    }
+
+    .quote-box {
+      margin-top: auto;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 24px;
+      padding: 24px;
+      background: rgba(0,0,0,.38);
+      backdrop-filter: blur(14px);
+    }
+
+    .quote-box h2 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+
+    .quote-box p {
+      margin: 0;
+      color: #d2d7df;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .section { padding: 72px 0; }
+
+    .section-header {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .kicker {
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(34px, 4vw, 58px);
+      line-height: 1;
+      letter-spacing: -.055em;
+      margin: 0 0 18px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      border-radius: var(--radius);
+      padding: 26px;
+      min-height: 210px;
+      box-shadow: 0 18px 48px rgba(0,0,0,.23);
+    }
+
+    .card .num {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255,36,55,.14);
+      color: var(--red);
+      font-weight: 900;
+      margin-bottom: 22px;
+      border: 1px solid rgba(255,36,55,.25);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -.03em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .problem {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 36px;
+      align-items: stretch;
+    }
+
+    .problem-box {
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      padding: 34px;
+    }
+
+    .problem-box strong { color: var(--text); }
+
+    .list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list li {
+      display: flex;
+      gap: 12px;
+      color: #d7dce5;
+      line-height: 1.45;
+      font-size: 17px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .check {
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--red));
+      display: inline-grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .form-section {
+      padding: 80px 0 96px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr .86fr;
+      gap: 34px;
+      align-items: start;
+      padding: 38px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(13,140,255,.18), transparent 34%),
+        radial-gradient(circle at 100% 50%, rgba(255,36,55,.17), transparent 36%),
+        rgba(255,255,255,.05);
+      box-shadow: var(--shadow);
+    }
+
+    .form-copy h2 { margin-bottom: 18px; }
+    .form-copy p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+      margin: 0 0 26px;
+      max-width: 620px;
+    }
+
+    .mini-proof {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .mini-proof div {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      padding: 14px 16px;
+      color: #d6dbe4;
+      background: rgba(0,0,0,.18);
+    }
+
+    form {
+      background: rgba(0,0,0,.34);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 26px;
+      padding: 24px;
+    }
+
+    label {
+      display: block;
+      color: #dde2ea;
+      font-weight: 750;
+      font-size: 14px;
+      margin: 0 0 8px;
+    }
+
+    input, select {
+      width: 100%;
+      height: 50px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      padding: 0 14px;
+      outline: none;
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+
+    select option { color: #111; }
+
+    input:focus, select:focus {
+      border-color: rgba(255,36,55,.62);
+      box-shadow: 0 0 0 4px rgba(255,36,55,.11);
+    }
+
+    .submit { width: 100%; height: 54px; font-size: 16px; }
+
+    .privacy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid, .problem, .form-grid { grid-template-columns: 1fr; }
+      .visual-card { min-height: 470px; }
+      .cards { grid-template-columns: 1fr; }
+      .navlinks a:not(.btn) { display: none; }
+      .hero { padding-top: 58px; }
+      .form-grid { padding: 22px; }
+      h1 { font-size: clamp(44px, 14vw, 70px); }
+    }
+
+    @media (max-width: 520px) {
+      .wrap { width: min(100% - 26px, var(--max)); }
+      .nav { height: 66px; }
+      .brand span { font-size: 14px; }
+      .navlinks .btn { padding: 11px 14px; font-size: 13px; }
+      .hero-actions { align-items: stretch; }
+      .hero-actions .btn { width: 100%; }
+      .visual-card { min-height: 430px; padding: 20px; border-radius: 26px; }
+      .pill-pair { transform: scale(.78) rotate(-7deg); }
+      .quote-box h2 { font-size: 28px; }
+      .section { padding: 54px 0; }
+      .card, .problem-box, form { padding: 20px; }
+      .form-section { padding: 54px 0 70px; }
+    }
+  </style>
+  <!-- MailerLite Universal -->
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2400332');
+  </script>
+  <!-- End MailerLite Universal -->
+  <style>
+    #mlb2-42099312.ml-form-embedContainer { box-sizing: border-box; display: table; margin: 0 auto; width: 100% !important; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper { background-color: transparent; border: none; border-radius: var(--radius); display: inline-block !important; margin: 0; padding: 0; width: 100%; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody { padding: 0; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent { margin: 0 0 20px 0; display: none; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody form { margin: 0; width: 100%; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-formContent { margin: 0 0 16px 0; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow { margin: 0 0 12px 0; width: 100%; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow.ml-last-item { margin: 0; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input,
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow .custom-select {
+      background-color: rgba(255,255,255,0.07) !important;
+      color: #f3f5f7 !important;
+      border: 1px solid rgba(255,255,255,0.18) !important;
+      border-radius: 10px !important;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 15px !important;
+      padding: 13px 16px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      outline: none;
+      transition: border-color .2s;
+    }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input::placeholder { color: rgba(255,255,255,0.38) !important; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input:focus,
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow .custom-select:focus { border-color: var(--red) !important; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow .custom-select option { background: #0b0e14; color: #f3f5f7; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit { margin: 16px 0 0 0; width: 100%; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button.primary {
+      background: linear-gradient(135deg, var(--red), #c41020) !important;
+      border: none !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      cursor: pointer;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      padding: 15px 24px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      transition: opacity .18s;
+    }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button.primary:hover { opacity: 0.88; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody { padding: 32px 0; text-align: center; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent h4 { color: #f3f5f7; font-size: 22px; margin: 0 0 10px; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent p { color: var(--muted); font-size: 15px; margin: 0; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmitLoad { display: inline-block; width: 20px; height: 20px; }
+    #mlb2-42099312.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmitLoad:after { content:" "; display:block; width:11px; height:11px; margin:1px; border-radius:50%; border:4px solid #fff; border-color:#fff #fff #fff transparent; animation:ml-form-embedSubmitLoad 1.2s linear infinite; }
+    @keyframes ml-form-embedSubmitLoad { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Píldora Roja">
+        <span class="mark"></span>
+        <span>Píldora Roja Coaching</span>
+      </a>
+      <nav class="navlinks" aria-label="Navegación principal">
+        <a href="#que-recibis">Qué recibís</a>
+        <a href="#para-quien">Para quién</a>
+        <a class="btn" href="#inscripcion">Recibir guía</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> Career & Power Coaching gratuito</div>
+          <h1>
+            Te enseñaron a trabajar bien.<br />
+            <span class="headline-red">No te enseñaron a jugar el juego.</span>
+          </h1>
+          <p class="lead">
+            Recibí una guía gratuita y consejos semanales para entender las reglas no escritas de la carrera profesional: visibilidad, sponsors, percepción, poder interno y timing.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#inscripcion">Quiero recibir la Píldora Roja</a>
+            <a class="btn secondary" href="#que-recibis">Ver qué incluye</a>
+          </div>
+          <p class="microcopy">
+            Sin promesas mágicas. Sin manipulación. Herramientas prácticas para leer mejor el tablero profesional y construir carrera con más estrategia.
+          </p>
+        </div>
+
+        <aside class="visual-card" aria-label="Visual de píldora roja y azul">
+          <div class="pill-stage" aria-hidden="true">
+            <div class="pill-pair">
+              <div class="pill blue"></div>
+              <div class="pill red"></div>
+            </div>
+          </div>
+          <div class="visual-copy">
+            <div class="visual-title">Píldora azul o píldora roja</div>
+            <div class="quote-box">
+              <h2>No alcanza con ser bueno.</h2>
+              <p>Si solo esperás que te descubran, otros van a avanzar antes que vos. Muchas veces, porque entendieron el juego antes.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="que-recibis">
+      <div class="wrap">
+        <div class="section-header">
+          <div class="kicker">Qué vas a recibir</div>
+          <h2>Una guía breve + consejos semanales para leer mejor el tablero.</h2>
+          <p>No es un curso pesado. Es una secuencia práctica de 8 emails con ideas, ejercicios y criterios para entender mejor cómo se construye una carrera dentro de empresas, startups y proyectos profesionales — inspirada en la teoría del profesor Jeffrey Pfeffer, de Stanford Graduate School of Business, autor de <em>7 Rules of Power</em> y creador del curso más popular de Stanford GSB: <em>The Paths to Power</em>.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="num">01</div>
+            <h3>Visibilidad sin exagerar</h3>
+            <p>Cómo hacer que tu trabajo sea visto sin convertirte en alguien pesado, desesperado o artificial.</p>
+          </article>
+          <article class="card">
+            <div class="num">02</div>
+            <h3>Sponsors reales</h3>
+            <p>Cómo distinguir entre gente amable, aliados circunstanciales y personas que realmente pueden abrirte puertas.</p>
+          </article>
+          <article class="card">
+            <div class="num">03</div>
+            <h3>Poder y percepción</h3>
+            <p>Cómo leer quién decide, quién influye, quién bloquea y cómo se construye tu reputación cuando no estás en la sala.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="para-quien">
+      <div class="wrap problem">
+        <div class="section-header">
+          <div class="kicker">El problema</div>
+          <h2>La mayoría juega con reglas incompletas.</h2>
+          <p>A muchos profesionales les enseñaron que si trabajan mucho, son responsables y hacen bien su tarea, tarde o temprano alguien va a reconocerlos. A veces pasa. Muchas veces no.</p>
+        </div>
+
+        <div class="problem-box">
+          <ul class="list">
+            <li><span class="check">✓</span><span>Trabajás bien, pero sentís que otros avanzan más rápido.</span></li>
+            <li><span class="check">✓</span><span>Querés crecer sin depender solamente de que alguien “vea tu valor”.</span></li>
+            <li><span class="check">✓</span><span>Estás entrando a una empresa, startup o nuevo proyecto y querés leer mejor el contexto.</span></li>
+            <li><span class="check">✓</span><span>Querés entender visibilidad, sponsors, timing, percepción y política interna sin volverte cínico.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-section" id="inscripcion">
+      <div class="wrap form-grid">
+        <div class="form-copy">
+          <div class="kicker">Inscripción gratuita</div>
+          <h2>Recibí la guía gratuita de Píldora Roja.</h2>
+          <p>
+            Dejá tus datos y recibí la primera guía para empezar a entender el juego profesional con más claridad, criterio y estrategia.
+          </p>
+          <div class="mini-proof">
+            <div><strong>Basado en:</strong> principios de career coaching, poder organizacional y desarrollo profesional.</div>
+            <div><strong>Formato:</strong> guía inicial + consejos semanales por email.</div>
+            <div><strong>Objetivo:</strong> ayudarte a construir carrera con menos ingenuidad y más lectura estratégica.</div>
+          </div>
+        </div>
+
+        <div id="mlb2-42099312" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-42099312">
+          <div class="ml-form-align-center">
+            <div class="ml-form-embedWrapper embedForm">
+              <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+                <div class="ml-form-embedContent" style="">
+                  <h4>Inscripción gratuita</h4>
+                  <p>Dejá tus datos para recibir la primera serie gratuita: 8 contenidos, uno por semana, con guías y consejos prácticos de Píldora Roja Coaching.</p>
+                </div>
+                <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2400332/forms/189173475980609056/subscribe" data-code="" method="post" target="_blank">
+                  <div class="ml-form-formContent">
+                    <div class="ml-form-fieldRow">
+                      <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                        <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="Email" autocomplete="email">
+                      </div>
+                    </div>
+                    <div class="ml-form-fieldRow">
+                      <div class="ml-field-group ml-field-name">
+                        <input aria-label="name" type="text" class="form-control" name="fields[name]" placeholder="Nombre" autocomplete="given-name">
+                      </div>
+                    </div>
+                    <div class="ml-form-fieldRow ml-last-item">
+                      <div class="ml-field-group ml-field-company">
+                        <select class="custom-select" name="fields[company]" aria-label="company">
+                          <option value="">¿En qué contexto trabajás?</option>
+                          <option>Corporación</option>
+                          <option>Pyme</option>
+                          <option>Startup</option>
+                          <option>Consultora / Agencia</option>
+                          <option>Estoy en transición / buscando trabajo</option>
+                          <option>Emprendimiento propio</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" name="ml-submit" value="1">
+                  <div class="ml-form-checkboxRow ml-validate-required" style="margin: 16px 0;">
+                    <label class="checkbox" style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+                      <input type="checkbox" name="fields[optin]" style="margin-top:3px; accent-color: var(--red); width:16px; height:16px; flex-shrink:0;">
+                      <span style="color: var(--muted); font-size:13px; line-height:1.5;">Acepto recibir contenido semanal de Píldora Roja Coaching. Podés darte de baja cuando quieras.</span>
+                    </label>
+                  </div>
+                  <div class="ml-form-embedSubmit">
+                    <button type="submit" class="primary">Recibir la guía gratuita</button>
+                    <button disabled="disabled" style="display:none;" type="button" class="loading">
+                      <div class="ml-form-embedSubmitLoad"></div>
+                      <span class="sr-only">Cargando...</span>
+                    </button>
+                  </div>
+                  <input type="hidden" name="anticsrf" value="true">
+                </form>
+              </div>
+              <div class="ml-form-successBody row-success" style="display:none">
+                <div class="ml-form-successContent">
+                  <h4>¡Listo!</h4>
+                  <p>Ya estás dentro. Revisá tu email en los próximos minutos.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          function ml_webform_success_42099312() {
+            var $ = ml_jQuery || jQuery;
+            $('.ml-subscribe-form-42099312 .row-success').show();
+            $('.ml-subscribe-form-42099312 .row-form').hide();
+          }
+        </script>
+        <script src="https://groot.mailerlite.com/js/w/webforms.min.js?vb397d78ebaa8a0f631d35384c46d781b" type="text/javascript"></script>
+        <script>fetch("https://assets.mailerlite.com/jsonp/2400332/forms/189173475980609056/takel")</script>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>Píldora Roja — Career & Power Coaching</span>
+      <span>Contenido gratuito para desarrollo profesional estratégico.</span>
+    </div>
+  </footer>
+</body>
+</html>
