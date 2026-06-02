@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Píldora Roja Coaching | Coaching gratuito de carrera</title>
+  <style>
+    :root {
+      --bg: #050608;
+      --bg2: #0b0e14;
+      --card: rgba(255,255,255,.065);
+      --card2: rgba(255,255,255,.095);
+      --text: #f5f7fb;
+      --muted: #aab2c0;
+      --line: rgba(255,255,255,.14);
+      --red: #ff2437;
+      --blue: #188cff;
+      --radius: 24px;
+      --max: 1120px;
+      --shadow: 0 35px 90px rgba(0,0,0,.55);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 16% 16%, rgba(24,140,255,.24), transparent 28%),
+        radial-gradient(circle at 84% 18%, rgba(255,36,55,.24), transparent 30%),
+        linear-gradient(180deg, #020305 0%, #080a0f 48%, #030406 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.032) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent 72%);
+      pointer-events: none;
+      z-index: -2;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 115%, rgba(255,255,255,.09), transparent 38%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(5,6,8,.72);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 850;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+    }
+    .brand small {
+      display: block;
+      margin-top: -2px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 22px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--red));
+      box-shadow: 0 0 32px rgba(255,36,55,.28), 0 0 32px rgba(24,140,255,.18);
+      transform: rotate(-18deg);
+    }
+    .links { display: flex; gap: 22px; color: var(--muted); font-size: 14px; }
+    .links a:hover { color: var(--text); }
+    .nav-cta {
+      padding: 10px 16px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .hero { padding: 82px 0 56px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 38px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,.045);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--red); box-shadow: 0 0 18px var(--red); }
+    h1 {
+      font-size: clamp(48px, 7vw, 86px);
+      line-height: .93;
+      margin: 0;
+      letter-spacing: -.07em;
+    }
+    .headline-red { color: var(--red); text-shadow: 0 0 36px rgba(255,36,55,.18); }
+    .lead {
+      font-size: clamp(18px, 2.1vw, 23px);
+      line-height: 1.45;
+      color: #d8dde6;
+      max-width: 690px;
+      margin: 24px 0 0;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(255,36,55,.95), rgba(170,10,24,.95));
+      color: white;
+      font-weight: 850;
+      box-shadow: 0 20px 50px rgba(255,36,55,.22);
+      cursor: pointer;
+    }
+    .btn.secondary { background: rgba(255,255,255,.06); box-shadow: none; }
+    .note { color: var(--muted); font-size: 14px; }
+
+    .visual {
+      min-height: 430px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(24,140,255,.25), transparent 30%),
+        radial-gradient(circle at 78% 30%, rgba(255,36,55,.28), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .visual::before {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.12);
+      background-image:
+        linear-gradient(90deg, transparent 49%, rgba(255,255,255,.08) 50%, transparent 51%),
+        linear-gradient(transparent 49%, rgba(255,255,255,.08) 50%, transparent 51%);
+      background-size: 84px 84px;
+      opacity: .55;
+    }
+    .pill {
+      position: absolute;
+      width: 180px;
+      height: 62px;
+      border-radius: 999px;
+      top: 170px;
+      filter: drop-shadow(0 25px 55px rgba(0,0,0,.5));
+    }
+    .pill.blue { left: 78px; background: linear-gradient(90deg, #a7ddff, #147bff 55%, #063b88); transform: rotate(-28deg); box-shadow: 0 0 60px rgba(24,140,255,.42); }
+    .pill.red { right: 76px; background: linear-gradient(90deg, #ff9aa4, #ff2437 55%, #780812); transform: rotate(28deg); box-shadow: 0 0 60px rgba(255,36,55,.42); }
+    .visual-copy {
+      position: absolute;
+      inset: auto 34px 36px;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 22px;
+      background: rgba(0,0,0,.42);
+      backdrop-filter: blur(10px);
+    }
+    .visual-copy strong { display: block; font-size: 28px; line-height: 1.08; letter-spacing: -.04em; }
+    .visual-copy p { margin: 10px 0 0; color: var(--muted); line-height: 1.45; }
+
+    section { padding: 54px 0; }
+    .section-title {
+      font-size: clamp(32px, 4.2vw, 54px);
+      line-height: 1;
+      letter-spacing: -.05em;
+      margin: 0 0 16px;
+    }
+    .section-lead { color: #d8dde6; font-size: 19px; line-height: 1.55; max-width: 840px; margin: 0; }
+
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+    .card {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+    }
+    .card h3 { margin: 0 0 8px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 15px; }
+
+    .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 26px; align-items: start; }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+    .mission p, .about p { color: #d8dde6; line-height: 1.65; font-size: 17px; margin: 0 0 16px; }
+    .mission p:last-child, .about p:last-child { margin-bottom: 0; }
+    .quote {
+      margin-top: 20px;
+      padding: 22px;
+      border-left: 4px solid var(--red);
+      background: rgba(255,36,55,.075);
+      border-radius: 18px;
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 850;
+      letter-spacing: -.03em;
+    }
+    .free-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+    .free-badge span { width: 9px; height: 9px; background: var(--blue); border-radius: 999px; box-shadow: 0 0 18px var(--blue); }
+
+    form { display: grid; gap: 14px; margin-top: 8px; }
+    label { display: grid; gap: 7px; color: #dce2ea; font-size: 14px; font-weight: 750; }
+    input, select {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 15px;
+      background: rgba(0,0,0,.34);
+      color: var(--text);
+      padding: 15px 15px;
+      font: inherit;
+      outline: none;
+    }
+    select option { background: #10131a; color: white; }
+    input:focus, select:focus { border-color: rgba(255,36,55,.72); box-shadow: 0 0 0 4px rgba(255,36,55,.1); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .privacy { color: var(--muted); font-size: 13px; line-height: 1.45; margin: 10px 0 0; }
+
+    .footer { padding: 38px 0 54px; border-top: 1px solid var(--line); color: var(--muted); }
+    .footer strong { color: var(--text); }
+
+    @media (max-width: 900px) {
+      .hero-grid, .split { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .links { display: none; }
+      .visual { min-height: 380px; }
+      .pill { width: 145px; height: 52px; top: 140px; }
+      .pill.blue { left: 52px; }
+      .pill.red { right: 52px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 28px, var(--max)); }
+      .hero { padding-top: 54px; }
+      .cards, .form-grid { grid-template-columns: 1fr; }
+      .nav-cta { display: none; }
+      .visual { min-height: 340px; border-radius: 26px; }
+      .pill { width: 128px; height: 46px; top: 112px; }
+      .pill.blue { left: 28px; }
+      .pill.red { right: 28px; }
+      .visual-copy { inset: auto 18px 20px; }
+      .visual-copy strong { font-size: 23px; }
+      .panel { padding: 22px; border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Píldora Roja Coaching">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Píldora Roja<br><small>Coaching</small></span>
+      </a>
+      <nav class="links" aria-label="Navegación">
+        <a href="#que-es">Qué es</a>
+        <a href="#mision">Misión</a>
+        <a href="#quienes-somos">Quiénes somos</a>
+        <a href="#inscripcion">Inscripción</a>
+      </nav>
+      <a class="nav-cta" href="#inscripcion">Inscribirme gratis</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> Coaching gratuito de carrera</div>
+          <h1>Te enseñaron a trabajar bien.<br><span class="headline-red">No te enseñaron a leer el juego.</span></h1>
+          <p class="lead">Píldora Roja Coaching es una iniciativa gratuita de 8 envíos, uno por semana, para divulgar las reglas no escritas del desarrollo profesional: visibilidad, sponsors, reputación, poder, timing y lectura política.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#inscripcion">Quiero inscribirme gratis</a>
+            <a class="btn secondary" href="#mision">Leer la misión</a>
+            <span class="note">Programa gratuito y limitado: 8 semanas, 1 envío por semana.</span>
+          </div>
+        </div>
+        <div class="visual" aria-hidden="true">
+          <div class="pill blue"></div>
+          <div class="pill red"></div>
+          <div class="visual-copy">
+            <strong>La píldora roja no es volverse cínico.</strong>
+            <p>Es dejar de ser ingenuo frente al tablero profesional.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="que-es">
+      <div class="wrap">
+        <h2 class="section-title">Qué es Píldora Roja Coaching</h2>
+        <p class="section-lead">No es un curso pesado. Es una secuencia práctica de 8 emails con ideas, ejercicios y criterios para entender mejor cómo se construye una carrera dentro de empresas, startups y proyectos profesionales.</p>
+        <div class="cards">
+          <article class="card">
+            <h3>Visibilidad</h3>
+            <p>Cómo hacer que tu trabajo sea visto sin caer en autopromoción barata.</p>
+          </article>
+          <article class="card">
+            <h3>Sponsors</h3>
+            <p>Cómo identificar quién puede abrirte puertas y respaldar tu crecimiento.</p>
+          </article>
+          <article class="card">
+            <h3>Poder interno</h3>
+            <p>Cómo leer quién decide, quién influye y quién bloquea oportunidades.</p>
+          </article>
+          <article class="card">
+            <h3>Reputación</h3>
+            <p>Cómo se construye tu percepción profesional incluso cuando no estás en la sala.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="mision">
+      <div class="wrap split">
+        <div>
+          <div class="free-badge"><span></span> Gratuito · 8 semanas · 1 envío por semana</div>
+          <h2 class="section-title">Nuestra misión</h2>
+          <p class="section-lead">Compartir conocimiento práctico que normalmente se aprende tarde: por golpes, errores o buenos mentores.</p>
+        </div>
+        <div class="panel mission">
+          <p>Durante años trabajamos dentro de empresas, corporaciones y proyectos profesionales donde vimos una verdad incómoda: muchas personas talentosas no avanzan porque nadie les enseñó cómo funciona realmente el juego.</p>
+          <p>Les dijeron que alcanzaba con trabajar mucho, cumplir, ser buenos en lo suyo y esperar reconocimiento.</p>
+          <p>Pero la carrera profesional también se juega en otro plano: visibilidad, poder, sponsors, reputación, alianzas, timing y lectura política.</p>
+          <p><strong>Píldora Roja Coaching nace para divulgar esa verdad.</strong></p>
+          <p>Creemos que este conocimiento no debería quedar reservado para quienes tuvieron la suerte de aprenderlo tarde, por golpes, errores o buenos mentores.</p>
+          <p>Por eso lo compartimos gratis en una primera serie acotada de 8 envíos, uno por semana: para que más profesionales puedan entender el tablero, moverse con más criterio y construir su carrera sin ingenuidad. Después de esta primera etapa evaluaremos cómo continuar.</p>
+          <div class="quote">La píldora roja no es volverse cínico.<br>Es dejar de ser ingenuo.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quienes-somos">
+      <div class="wrap split">
+        <div>
+          <h2 class="section-title">Quiénes somos</h2>
+          <p class="section-lead">Un grupo de profesionales con experiencia en empresas, corporaciones y proyectos de alto crecimiento.</p>
+        </div>
+        <div class="panel about">
+          <p>No venimos a romantizar la vida corporativa ni a promover el cinismo. Venimos a poner sobre la mesa las reglas no escritas que muchas veces definen quién crece, quién queda invisible y quién termina frustrado.</p>
+          <p>Creemos que entender el juego no te vuelve menos auténtico. Te vuelve más consciente, más estratégico y más capaz de cuidar tu propio desarrollo profesional.</p>
+          <p>La iniciativa será gratuita y estará limitada inicialmente a 8 envíos semanales. El objetivo principal es divulgar una forma más honesta de mirar la carrera profesional, sin asumir un compromiso indefinido.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="inscripcion">
+      <div class="wrap split">
+        <div>
+          <h2 class="section-title">Inscripción gratuita</h2>
+          <p class="section-lead">Dejá tus datos para recibir la primera serie gratuita: 8 contenidos, uno por semana, con guías y consejos prácticos de Píldora Roja Coaching.</p>
+        </div>
+        <div class="panel">
+          <form action="#" method="post">
+            <div class="form-grid">
+              <label>
+                Nombre
+                <input type="text" name="nombre" autocomplete="given-name" required placeholder="Tu nombre" />
+              </label>
+              <label>
+                Apellido
+                <input type="text" name="apellido" autocomplete="family-name" required placeholder="Tu apellido" />
+              </label>
+            </div>
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="email" required placeholder="tu@email.com" />
+            </label>
+            <div class="form-grid">
+              <label>
+                Sector
+                <select name="sector" required>
+                  <option value="" selected disabled>Seleccioná tu sector</option>
+                  <option>Tecnología / Software</option>
+                  <option>Finanzas / Bancos / Fintech</option>
+                  <option>Consumo masivo / Retail</option>
+                  <option>Salud / Farma</option>
+                  <option>Travel / Turismo / Hospitality</option>
+                  <option>Servicios profesionales</option>
+                  <option>Industria / Energía / Infraestructura</option>
+                  <option>Educación</option>
+                  <option>Otro</option>
+                </select>
+              </label>
+              <label>
+                Tipo de empresa
+                <select name="tipo_empresa" required>
+                  <option value="" selected disabled>Seleccioná una opción</option>
+                  <option>Corporación / Multinacional</option>
+                  <option>Empresa grande local</option>
+                  <option>PyME</option>
+                  <option>Startup / Scaleup</option>
+                  <option>Consultora / Agencia</option>
+                  <option>Sector público / ONG</option>
+                  <option>Independiente / Freelancer</option>
+                  <option>Estoy buscando trabajo</option>
+                  <option>Otro</option>
+                </select>
+              </label>
+            </div>
+            <button class="btn" type="submit">Inscribirme gratis</button>
+            <p class="privacy">La primera serie será gratuita y limitada a 8 envíos semanales. Estos datos se usan para segmentar mejor los contenidos. El formulario está listo para conectar con MailerLite, Google Forms, Typeform, HubSpot o cualquier CRM.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <strong>Píldora Roja Coaching</strong><br>
+      Coaching gratuito de carrera en 8 envíos semanales para aprender a leer el tablero profesional.
+    </div>
+  </footer>
+</body>
+</html>
